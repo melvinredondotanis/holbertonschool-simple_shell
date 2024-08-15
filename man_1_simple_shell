@@ -1,0 +1,29 @@
+.TH man_1_simple_shell 1 "August 2024" "Holberton School" "General Commands Manual"
+
+.SH NAME
+simple_shell \- A simple shell for executing commands
+
+.SH SYNOPSIS
+.B simple_shell
+.RI [ options ]
+
+.SH DESCRIPTION
+.B simple_shell
+Is a minimalist shell designed to run commands from the command line.
+
+.SH OPTIONS
+.TP
+.B \-h, \-\-help
+Show this help message and exit.
+
+.SH EXAMPLES
+.TP
+.B simple_shell
+Launch the interactive shell.
+
+.SH SEE ALSO
+.BR sh (1),
+.BR bash (1)
+
+.SH AUTHOR
+Written by Melvin Redondo--Tanis.
