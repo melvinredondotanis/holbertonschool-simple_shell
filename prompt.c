@@ -20,7 +20,7 @@ int prompt(char **line, size_t *len)
 			putchar('\n');
 			exit(EXIT_SUCCESS);
 		}
-		perror("getline");
+		perror("simple_shell: ");
 		exit(EXIT_FAILURE);
 	}
 	return (read);
