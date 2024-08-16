@@ -12,7 +12,7 @@ int prompt(char **line, size_t *len, char *program_name)
 {
 	int read;
 
-	printf("$ ");
+	printf("#cisfun$ ");
 	read = getline(line, len, stdin);
 	if (read == -1)
 	{
