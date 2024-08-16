@@ -15,7 +15,12 @@ int prompt(char **line, size_t *len)
 	read = getline(line, len, stdin);
 	if (read == -1)
 	{
-		perror("getline failed");
+		if (errno == 0)
+		{
+			putchar('\n');
+			exit(EXIT_SUCCESS);
+		}
+		perror("getline");
 		exit(EXIT_FAILURE);
 	}
 	return (read);

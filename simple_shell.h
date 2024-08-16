@@ -6,6 +6,7 @@
 #include <sys/wait.h>
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 #include <stdio.h>
 
 int execute(char *bin, char *args);

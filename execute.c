@@ -13,14 +13,14 @@ int execute(char *bin, char *args)
 
 	if (pid == -1)
 	{
-		perror("fork failed");
+		perror("fork");
 		exit(EXIT_FAILURE);
 	}
 	else if (pid == 0)
 	{
 		if (execve(bin, &args, NULL) == -1)
 		{
-			perror("execve failed");
+			perror("execve");
 			exit(EXIT_FAILURE);
 		}
 	}
