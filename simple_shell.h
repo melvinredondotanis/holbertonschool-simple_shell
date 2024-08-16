@@ -9,8 +9,8 @@
 #include <errno.h>
 #include <stdio.h>
 
-int execute(char *bin, char *args);
-int interpreter(char **command);
-int prompt(char **line, size_t *len);
+int execute(char *bin, char *args, char *program_name);
+int interpreter(char **command, char *program_name);
+int prompt(char **line, size_t *len, char *program_name);
 
 #endif /* SIMPLE_SHELL_H */

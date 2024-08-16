@@ -3,10 +3,11 @@
 /**
  * interpreter - interprets a command
  * @command: pointer to command
+ * @program_name: name of the program
  *
  * Return: 0
  */
-int interpreter(char **command)
+int interpreter(char **command, char *program_name)
 {
 	int status = 0;
 	char *token;
@@ -14,7 +15,7 @@ int interpreter(char **command)
 	token = strtok(*command, "\n");
 	for (; token != NULL; token = strtok(NULL, " "))
 	{
-		if (execute(token, strtok(NULL, " ")) == 0)
+		if (execute(token, strtok(NULL, " "), program_name) == 0)
 			status = 0;
 	}
 	return (status);

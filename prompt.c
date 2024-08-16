@@ -4,10 +4,11 @@
  * prompt - prints prompt and reads input
  * @line: pointer to buffer
  * @len: pointer to buffer size
+ * @program_name: name of the program
  *
  * Return: number of characters read
  */
-int prompt(char **line, size_t *len)
+int prompt(char **line, size_t *len, char *program_name)
 {
 	int read;
 
@@ -20,7 +21,7 @@ int prompt(char **line, size_t *len)
 			putchar('\n');
 			exit(EXIT_SUCCESS);
 		}
-		perror("simple_shell: ");
+		perror(program_name);
 		exit(EXIT_FAILURE);
 	}
 	return (read);
