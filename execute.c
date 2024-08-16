@@ -5,10 +5,11 @@
  * @bin: program to execute
  * @args: arguments
  * @program_name: name of the program
+ * @env: environment
  *
  * Return: 0
  */
-int execute(char *bin, char *args, char *program_name)
+int execute(char *bin, char *args, char *program_name, char *env)
 {
 	int status;
 	pid_t pid = fork();
@@ -20,7 +21,7 @@ int execute(char *bin, char *args, char *program_name)
 	}
 	else if (pid == 0)
 	{
-		if (execve(bin, &args, NULL) == -1)
+		if (execve(bin, &args, &env) == -1)
 		{
 			perror(program_name);
 			exit(EXIT_FAILURE);

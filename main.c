@@ -4,10 +4,11 @@
  * main - entry point
  * @argc: argument count
  * @argv: argument value
+ * @env: environment
  *
  * Return: 0
  */
-int main(int argc, char **argv)
+int main(int argc, char **argv, char **env)
 {
 	int status = 0;
 	char *program_name;
@@ -21,7 +22,7 @@ int main(int argc, char **argv)
 	{
 		while (getline(ptr_line, &len, stdin) != -1)
 		{
-			status = interpreter(ptr_line, program_name);
+			status = interpreter(ptr_line, program_name, *env);
 			if (status == -1)
 			{
 				free(*ptr_line);
@@ -39,7 +40,7 @@ int main(int argc, char **argv)
 				exit(EXIT_FAILURE);
 			}
 
-			status = interpreter(ptr_line, program_name);
+			status = interpreter(ptr_line, program_name, *env);
 			if (status == -1)
 			{
 				free(*ptr_line);
