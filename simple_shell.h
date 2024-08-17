@@ -9,8 +9,21 @@
 #include <errno.h>
 #include <stdio.h>
 
-int execute(char *bin, char *args, char *program_name, char *env);
-int interpreter(char **command, char *program_name, char *env);
-int prompt(char **line, size_t *len, char *program_name);
+/**
+ * struct arguments - structure for arguments
+ * @name: name of the program
+ * @command: command
+ * @env: environment
+ */
+typedef struct arguments
+{
+	char *name;
+	char *command;
+	char **env;
+} arguments_t;
+
+int execute(char *name, char *bin, char *args, char *env);
+int interpreter(arguments_t *args);
+int prompt(arguments_t *args, size_t *len);
 
 #endif /* SIMPLE_SHELL_H */

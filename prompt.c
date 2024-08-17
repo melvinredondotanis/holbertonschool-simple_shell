@@ -1,19 +1,18 @@
 #include "simple_shell.h"
 
 /**
- * prompt - prints prompt and reads input
- * @line: pointer to buffer
- * @len: pointer to buffer size
- * @program_name: name of the program
+ * prompt - prompt the user for a command
+ * @args: arguments
+ * @len: length of the command
  *
  * Return: number of characters read
  */
-int prompt(char **line, size_t *len, char *program_name)
+int prompt(arguments_t *args, size_t *len)
 {
 	int read;
 
 	printf("($) ");
-	read = getline(line, len, stdin);
+	read = getline(&args->command, len, stdin);
 	if (read == -1)
 	{
 		if (errno == 0)
@@ -21,7 +20,7 @@ int prompt(char **line, size_t *len, char *program_name)
 			putchar('\n');
 			exit(EXIT_SUCCESS);
 		}
-		perror(program_name);
+		perror(args->name);
 		exit(EXIT_FAILURE);
 	}
 	return (read);

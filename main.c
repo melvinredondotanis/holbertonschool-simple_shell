@@ -11,43 +11,43 @@
 int main(int argc, char **argv, char **env)
 {
 	int status = 0;
-	char *program_name;
-	char *line = NULL, **ptr_line = &line;
 	size_t len = 0;
+	arguments_t *args = malloc(sizeof(arguments_t));
 	(void)argc;
-
-	program_name = strtok(argv[0], "\n");
-
+	if (!args)
+	{
+		perror(argv[0]);
+		exit(EXIT_FAILURE);
+	}
+	args->name = strtok(argv[0], "\n");
+	args->command = malloc(sizeof(char *)), args->env = env;
 	if (!isatty(STDIN_FILENO))
-	{
-		while (getline(ptr_line, &len, stdin) != -1)
+		if (getline(&(args->command), &len, stdin) != -1)
 		{
-			status = interpreter(ptr_line, program_name, *env);
+			status = interpreter(args);
 			if (status == -1)
 			{
-				free(*ptr_line);
+				free(args->command);
+				free(args);
 				exit(EXIT_FAILURE);
 			}
+			return (status);
 		}
-	}
-	else
+	while (1)
 	{
-		while (1)
+		if (prompt(args, &len) == -1)
 		{
-			if (prompt(ptr_line, &len, program_name) == -1)
-			{
-				free(*ptr_line);
-				exit(EXIT_FAILURE);
-			}
-
-			status = interpreter(ptr_line, program_name, *env);
-			if (status == -1)
-			{
-				free(*ptr_line);
-				exit(EXIT_FAILURE);
-			}
+			free(args->command);
+			free(args);
+			exit(EXIT_FAILURE);
+		}
+		status = interpreter(args);
+		if (status == -1)
+		{
+			free(args->command);
+			free(args);
+			exit(EXIT_FAILURE);
 		}
 	}
-	free(*ptr_line);
 	return (status);
 }
