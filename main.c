@@ -49,6 +49,7 @@ int main(int argc, char **argv, char **env)
 	if (!isatty(STDIN_FILENO))
 		if (getline(&args->command, &len, stdin) != -1)
 		{
+			args->command = strtok(args->command, "\n");
 			status = interpreter(args);
 			return (status);
 		}
