@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <signal.h>
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
@@ -22,7 +23,7 @@ typedef struct arguments
 	char **env;
 } arguments_t;
 
-int execute(char *name, char **command, char *env);
+int execute(char *name, char **command, char **env);
 int interpreter(arguments_t *args);
 void prompt(arguments_t *args, size_t *len);
 
