@@ -53,14 +53,15 @@ int main(int argc, char **argv, char **env)
 			cleanup(args);
 			return (status);
 		}
+
 	while (1)
 	{
 		prompt(args, &len);
 		args->command = strtok(args->command, "\n");
 		status = interpreter(args);
-		free(args->command);
 		args->command = NULL;
 	}
+
 	cleanup(args);
 	return (status);
 }

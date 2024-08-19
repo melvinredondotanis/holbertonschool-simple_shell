@@ -18,5 +18,9 @@ void prompt(arguments_t *args, size_t *len)
 		if (errno == 0)
 			putchar('\n');
 		perror(args->name);
+		free(args->name);
+		free(args->command);
+		free(args);
+		exit(EXIT_FAILURE);
 	}
 }

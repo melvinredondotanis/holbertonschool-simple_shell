@@ -11,20 +11,20 @@ int interpreter(arguments_t *args)
 	int status;
 	char *_args[3];
 
+	if (!args || !args->command)
+		return (EXIT_SUCCESS);
+
 	_args[0] = strtok(args->command, " ");
 	_args[1] = strtok(NULL, " ");
 	_args[2] = NULL;
-	if (!_args[0])
+
+	if (_args[0] == NULL)
 	{
-		free(_args[0]);
-		free(_args[1]);
-		free(_args[2]);	
-		return (EXIT_SUCCESS);
+		free(args->command);
+		return (EXIT_FAILURE);
 	}
 
 	status = execute(args->name, _args, args->env);
-	free(_args[0]);
-	free(_args[1]);
-	free(_args[2]);
+	free(args->command);
 	return (status);
 }
