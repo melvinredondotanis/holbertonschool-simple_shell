@@ -50,7 +50,6 @@ int main(int argc, char **argv, char **env)
 		if (getline(&args->command, &len, stdin) != -1)
 		{
 			status = interpreter(args);
-			cleanup(args);
 			return (status);
 		}
 
