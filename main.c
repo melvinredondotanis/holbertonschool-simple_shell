@@ -25,7 +25,6 @@ void cleanup(arguments_t *args)
 int main(int argc, char **argv, char **env)
 {
 	int status = 0;
-	char *temp;
 	size_t len = 0;
 	arguments_t *args = malloc(sizeof(arguments_t));
 	(void)argc;
@@ -50,9 +49,10 @@ int main(int argc, char **argv, char **env)
 	if (!isatty(STDIN_FILENO))
 		if (getline(&args->command, &len, stdin) != -1)
 		{
-			temp = strtok(args->command, "\n");
-			args->command = temp;
+			args->command = strtok(args->command, "\n");
 			status = interpreter(args);
+			free(args->name);
+			free(args);
 			return (status);
 		}
 
