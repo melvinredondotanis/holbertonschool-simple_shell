@@ -9,24 +9,20 @@
  *
  * Return: 0
  */
-int execute(char *name, char *bin, char *args, char *env)
+int execute(char *name, char **command, char *env)
 {
 	int status;
 	pid_t pid = fork();
 
 	if (pid == -1)
 	{
-		free(bin);
-		free(args);
 		perror(name);
 		exit(EXIT_FAILURE);
 	}
 	else if (pid == 0)
 	{
-		if (execve(bin, &args, &env) == -1)
+		if (execve(command[0], command, &env) == -1)
 		{
-			free(bin);
-			free(args);
 			perror(name);
 			exit(EXIT_FAILURE);
 		}

@@ -22,7 +22,7 @@ typedef struct arguments
 	char **env;
 } arguments_t;
 
-int execute(char *name, char *bin, char *args, char *env);
+int execute(char *name, char **command, char *env);
 int interpreter(arguments_t *args);
 void prompt(arguments_t *args, size_t *len);
 

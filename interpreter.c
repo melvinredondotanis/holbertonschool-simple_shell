@@ -9,21 +9,23 @@
 int interpreter(arguments_t *args)
 {
 	int status;
-	char *command = strtok(args->command, "\n");
-	char *bin = strtok(command, " ");
-	char *_args = strtok(NULL, " ");
+	char *_args[3];
 	char *_env = &args->env[0][0];
 
-	if (!bin)
+	_args[0] = strtok(args->command, " ");
+	_args[1] = strtok(NULL, " ");
+	_args[2] = NULL;
+	if (!_args[0])
 	{
-		free(command);
-		free(bin);
-		free(_args);
+		free(_args[0]);
+		free(_args[1]);
+		free(_args[2]);	
 		return (EXIT_SUCCESS);
 	}
-	free(command);
 
-
-	status = execute(args->name, bin,_args , _env);
+	status = execute(args->name, _args, _env);
+	free(_args[0]);
+	free(_args[1]);
+	free(_args[2]);
 	return (status);
 }
