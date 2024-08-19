@@ -17,7 +17,6 @@ int interpreter(arguments_t *args)
 	_args[0] = strtok(args->command, " ");
 	_args[1] = strtok(NULL, " ");
 	_args[2] = NULL;
-
 	if (_args[0] == NULL)
 	{
 		free(args->command);

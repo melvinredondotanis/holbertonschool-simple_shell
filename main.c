@@ -1,20 +1,6 @@
 #include "simple_shell.h"
 
 /**
- * cleanup - clean up the arguments
- * @args: arguments
- */
-void cleanup(arguments_t *args)
-{
-	if (args != NULL)
-	{
-		free(args->name);
-		free(args->command);
-		free(args);
-	}
-}
-
-/**
  * main - entry point
  * @argc: argument count
  * @argv: argument value
@@ -24,8 +10,9 @@ void cleanup(arguments_t *args)
  */
 int main(int argc, char **argv, char **env)
 {
-	int status = 0;
-	size_t len = 0;
+	int status;
+	char *_command;
+	size_t len;
 	arguments_t *args = malloc(sizeof(arguments_t));
 	(void)argc;
 
@@ -35,7 +22,6 @@ int main(int argc, char **argv, char **env)
 		cleanup(args);
 		return (EXIT_FAILURE);
 	}
-
 	args->name = strdup(argv[0]);
 	args->command = NULL;
 	args->env = env;
@@ -45,17 +31,21 @@ int main(int argc, char **argv, char **env)
 		cleanup(args);
 		return (EXIT_FAILURE);
 	}
-
 	if (!isatty(STDIN_FILENO))
-		if (getline(&args->command, &len, stdin) != -1)
+	{
+		while ((getline(&_command, &len, stdin)) != -1)
 		{
-			args->command = strtok(args->command, "\n");
-			status = interpreter(args);
-			free(args->name);
-			free(args);
-			return (status);
+			args->command = strtok(_command, "\n");
+			while (args->command)
+			{
+				status = interpreter(args);
+				args->command = strtok(NULL, " ");
+			}
+			args->command = NULL;
 		}
-
+		cleanup(args);
+		return (status);
+	}
 	while (1)
 	{
 		prompt(args, &len);
@@ -63,7 +53,6 @@ int main(int argc, char **argv, char **env)
 		status = interpreter(args);
 		args->command = NULL;
 	}
-
 	cleanup(args);
 	return (status);
 }

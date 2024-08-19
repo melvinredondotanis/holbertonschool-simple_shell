@@ -9,18 +9,14 @@
  */
 void prompt(arguments_t *args, size_t *len)
 {
-	int read;
-
 	printf("($) ");
-	read = getline(&args->command, len, stdin);
-	if (read == -1)
+	if (getline(&args->command, len, stdin) == -1)
 	{
 		if (errno == 0)
 			putchar('\n');
+
 		perror(args->name);
-		free(args->name);
-		free(args->command);
-		free(args);
+		cleanup(args);
 		exit(EXIT_FAILURE);
 	}
 }
