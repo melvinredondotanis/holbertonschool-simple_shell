@@ -24,6 +24,6 @@ typedef struct arguments
 
 int execute(char *name, char *bin, char *args, char *env);
 int interpreter(arguments_t *args);
-int prompt(arguments_t *args, size_t *len);
+void prompt(arguments_t *args, size_t *len);
 
 #endif /* SIMPLE_SHELL_H */

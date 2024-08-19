@@ -27,6 +27,7 @@ int main(int argc, char **argv, char **env)
 			status = interpreter(args);
 			if (status == -1)
 			{
+				free(args->name);
 				free(args->command);
 				free(args);
 				exit(EXIT_FAILURE);
@@ -35,15 +36,11 @@ int main(int argc, char **argv, char **env)
 		}
 	while (1)
 	{
-		if (prompt(args, &len) == -1)
-		{
-			free(args->command);
-			free(args);
-			exit(EXIT_FAILURE);
-		}
+		prompt(args, &len);
 		status = interpreter(args);
 		if (status == -1)
 		{
+			free(args->name);
 			free(args->command);
 			free(args);
 			exit(EXIT_FAILURE);

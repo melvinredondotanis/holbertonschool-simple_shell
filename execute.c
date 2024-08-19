@@ -16,6 +16,8 @@ int execute(char *name, char *bin, char *args, char *env)
 
 	if (pid == -1)
 	{
+		free(bin);
+		free(args);
 		perror(name);
 		exit(EXIT_FAILURE);
 	}
@@ -23,6 +25,8 @@ int execute(char *name, char *bin, char *args, char *env)
 	{
 		if (execve(bin, &args, &env) == -1)
 		{
+			free(bin);
+			free(args);
 			perror(name);
 			exit(EXIT_FAILURE);
 		}
