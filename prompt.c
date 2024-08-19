@@ -7,7 +7,7 @@
  *
  * Return: number of characters read
  */
-int prompt(arguments_t *args, size_t *len)
+void prompt(arguments_t *args, size_t *len)
 {
 	int read;
 
@@ -16,12 +16,11 @@ int prompt(arguments_t *args, size_t *len)
 	if (read == -1)
 	{
 		if (errno == 0)
-		{
 			putchar('\n');
-			exit(EXIT_SUCCESS);
-		}
 		perror(args->name);
+		free(args->name);
+		free(args->command);
+		free(args);
 		exit(EXIT_FAILURE);
 	}
-	return (read);
 }

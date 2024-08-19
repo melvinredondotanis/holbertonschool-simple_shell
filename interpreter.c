@@ -8,15 +8,23 @@
  */
 int interpreter(arguments_t *args)
 {
-	char *command = strtok(args->command, "\n");
-	char *bin = strtok(command, " ");
-	char *_args = strtok(NULL, " ");
-	char *_env = &args->env[0][0];
+	int status;
+	char *_args[3];
 
-	if (!bin)
+	if (!args || !args->command)
 		return (EXIT_SUCCESS);
 
-	if (args != NULL)
-		return (execute(args->name, bin, _args, _env));
-	return (execute(args->name, bin, NULL, _env));
+	_args[0] = strtok(args->command, " ");
+	_args[1] = strtok(NULL, " ");
+	_args[2] = NULL;
+
+	if (_args[0] == NULL)
+	{
+		free(args->command);
+		return (EXIT_FAILURE);
+	}
+
+	status = execute(args->name, _args, args->env);
+	free(args->command);
+	return (status);
 }

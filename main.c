@@ -1,6 +1,20 @@
 #include "simple_shell.h"
 
 /**
+ * cleanup - clean up the arguments
+ * @args: arguments
+ */
+void cleanup(arguments_t *args)
+{
+	if (args != NULL)
+	{
+		free(args->name);
+		free(args->command);
+		free(args);
+	}
+}
+
+/**
  * main - entry point
  * @argc: argument count
  * @argv: argument value
@@ -14,40 +28,40 @@ int main(int argc, char **argv, char **env)
 	size_t len = 0;
 	arguments_t *args = malloc(sizeof(arguments_t));
 	(void)argc;
+
 	if (!args)
 	{
 		perror(argv[0]);
-		exit(EXIT_FAILURE);
+		cleanup(args);
+		return (EXIT_FAILURE);
 	}
-	args->name = strtok(argv[0], "\n");
-	args->command = malloc(sizeof(char *)), args->env = env;
+
+	args->name = strdup(argv[0]);
+	args->command = NULL;
+	args->env = env;
+	if (!args->name)
+	{
+		perror(argv[0]);
+		cleanup(args);
+		return (EXIT_FAILURE);
+	}
+
 	if (!isatty(STDIN_FILENO))
-		if (getline(&(args->command), &len, stdin) != -1)
+		if (getline(&args->command, &len, stdin) != -1)
 		{
 			status = interpreter(args);
-			if (status == -1)
-			{
-				free(args->command);
-				free(args);
-				exit(EXIT_FAILURE);
-			}
+			cleanup(args);
 			return (status);
 		}
+
 	while (1)
 	{
-		if (prompt(args, &len) == -1)
-		{
-			free(args->command);
-			free(args);
-			exit(EXIT_FAILURE);
-		}
+		prompt(args, &len);
+		args->command = strtok(args->command, "\n");
 		status = interpreter(args);
-		if (status == -1)
-		{
-			free(args->command);
-			free(args);
-			exit(EXIT_FAILURE);
-		}
+		args->command = NULL;
 	}
+
+	cleanup(args);
 	return (status);
 }
