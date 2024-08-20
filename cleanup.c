@@ -10,8 +10,10 @@ void cleanup(arguments_t *args)
 	{
 		if (args->name)
 			free(args->name);
+
 		if (args->command)
 			free(args->command);
+
 		free(args);
 	}
 }
