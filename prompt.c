@@ -17,7 +17,10 @@ void prompt(arguments_t *args, size_t *len, int mode)
 	if (getline(&args->command, len, stdin) == -1)
 	{
 		if (errno == 0)
+		{
+			cleanup(args);
 			exit(EXIT_SUCCESS);
+		}
 		else
 		{
 			perror(args->name);
