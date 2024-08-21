@@ -16,7 +16,6 @@ void prompt(arguments_t *args, size_t *len, int mode)
 	errno = 0;
 	if (getline(&args->command, len, stdin) == -1)
 	{
-		putchar('\n');
 		if (errno == 0)
 		{
 			cleanup(args);
