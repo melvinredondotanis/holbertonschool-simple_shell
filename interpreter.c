@@ -13,7 +13,6 @@ int interpreter(arguments_t *args)
 
 	if (!args || !args->command)
 		return (EXIT_SUCCESS);
-
 	_args[0] = strtok(args->command, " ");
 	_args[1] = strtok(NULL, " ");
 	_args[2] = NULL;
@@ -22,14 +21,12 @@ int interpreter(arguments_t *args)
 		free(args->command);
 		return (EXIT_FAILURE);
 	}
-
 	if (_args[0][0] == '/')
 	{
 		status = execute(args->name, _args, args->env);
 		free(args->command);
 		return (status);
 	}
-
 	tmp = malloc(sizeof(char) * (strlen(path) + strlen(_args[0]) + 1));
 	if (tmp == NULL)
 	{
@@ -37,7 +34,6 @@ int interpreter(arguments_t *args)
 		free(args->command);
 		return (EXIT_FAILURE);
 	}
-
 	strcpy(tmp, path);
 	strcat(tmp, _args[0]);
 	_args[0] = tmp;
@@ -48,7 +44,6 @@ int interpreter(arguments_t *args)
 		free(args->command);
 		return (EXIT_FAILURE);
 	}
-
 	status = execute(args->name, _args, args->env);
 	free(tmp);
 	free(args->command);
