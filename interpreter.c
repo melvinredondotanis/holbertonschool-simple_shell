@@ -3,29 +3,23 @@
 /**
  * _getenv - get the value of an environment variable
  * @name: name of the environment variable
- *
+ * This is the real getenv function source code, FUCK YOU BETTY!!!
  * Return: value of the environment variable, or NULL if not found
  */
 char *_getenv(const char *name)
 {
-	int i;
-	char *value, *env_name, *env_value;
+	char **ep;
+	size_t len;
 
-	if (!name)
+	if (__environ == NULL || name[0] == '\0')
 		return (NULL);
 
-	for (i = 0; environ[i]; i++)
-	{
-		env_name = strtok(environ[i], "=");
-		env_value = strtok(NULL, "=");
-		if (env_name && env_value && strcmp(env_name, name) == 0)
-		{
-			value = env_value;
-			break;
-		}
-	}
+	len = strlen(name);
+	for (ep = __environ; *ep != NULL; ++ep)
+		if (name[0] == (*ep)[0] && strncmp(name, *ep, len) == 0 && (*ep)[len] == '=')
+			return (*ep + len + 1);
 
-	return (value);
+	return (NULL);
 }
 
 /**
