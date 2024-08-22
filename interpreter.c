@@ -30,9 +30,10 @@ char *_getenv(const char *name)
  */
 int interpreter(arguments_t *args)
 {
-	int status;
+	int status, fd;
 	char *_args[3], *tmp, *path_token;
 	char *path = strdup(_getenv("PATH"));
+	struct stat file_stat;
 
 	if (!args || !args->command)
 		return (EXIT_SUCCESS);
@@ -49,9 +50,24 @@ int interpreter(arguments_t *args)
 
 	if (_args[0][0] == '/')
 	{
+		fd = open(_args[0], O_RDONLY);
+		if (fd == -1)
+		{
+			perror(args->name);
+			return (EXIT_FAILURE);
+		}
+
+		if (fstat(fd, &file_stat) == -1)
+		{
+			perror(args->name);
+			close(fd);
+			return (EXIT_FAILURE);
+		}
+
 		status = execute(args->name, _args, args->env);
 		free(path);
 		free(args->command);
+		close(fd);
 		return (status);
 	}
 
