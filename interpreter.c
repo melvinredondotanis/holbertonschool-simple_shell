@@ -1,51 +1,66 @@
 #include "simple_shell.h"
 
 /**
- * interpreter - interprets the command
+ * interpreter - interpreter
  * @args: arguments
  *
- * Return: exit status of the executed program
+ * Return: status
  */
 int interpreter(arguments_t *args)
 {
 	int status;
-	char *_args[3], *path = "/usr/bin/", *tmp;
+	char *_args[3], *tmp, *path_token;
+	char *path = strdup(getenv("PATH"));
 
 	if (!args || !args->command)
 		return (EXIT_SUCCESS);
+
 	_args[0] = strtok(args->command, " ");
 	_args[1] = strtok(NULL, " ");
 	_args[2] = NULL;
 	if (!_args[0])
 	{
+		free(path);
 		free(args->command);
 		return (EXIT_FAILURE);
 	}
+
 	if (_args[0][0] == '/')
 	{
 		status = execute(args->name, _args, args->env);
+		free(path);
 		free(args->command);
 		return (status);
 	}
-	tmp = malloc(sizeof(char) * (strlen(path) + strlen(_args[0]) + 1));
-	if (tmp == NULL)
+
+	path_token = strtok(path, ":");
+	while (path_token)
 	{
-		perror(args->name);
-		free(args->command);
-		return (EXIT_FAILURE);
-	}
-	strcpy(tmp, path);
-	strcat(tmp, _args[0]);
-	_args[0] = tmp;
-	if (access(_args[0], X_OK) == -1)
-	{
-		perror(args->name);
+		tmp = malloc(strlen(path_token) + strlen(_args[0]) + 2);
+		if (!tmp)
+		{
+			free(args->command);
+			return (EXIT_FAILURE);
+		}
+
+		strcpy(tmp, path_token);
+		strcat(tmp, "/");
+		strcat(tmp, _args[0]);
+		if (access(tmp, X_OK) == 0)
+		{
+			_args[0] = tmp;
+			status = execute(args->name, _args, args->env);
+			free(tmp);
+			free(path);
+			free(args->command);
+			return (status);
+		}
 		free(tmp);
-		free(args->command);
-		return (EXIT_FAILURE);
+		path_token = strtok(NULL, ":");
 	}
-	status = execute(args->name, _args, args->env);
-	free(tmp);
+
+	perror(args->name);
+	free(path);
 	free(args->command);
-	return (status);
+	return (EXIT_FAILURE);
 }
