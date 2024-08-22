@@ -10,6 +10,8 @@
 #include <errno.h>
 #include <stdio.h>
 
+extern char **environ;
+
 /**
  * struct arguments - structure for arguments
  * @name: name of the programEXIT_SUCCESS

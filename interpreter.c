@@ -1,6 +1,34 @@
 #include "simple_shell.h"
 
 /**
+ * _getenv - get the value of an environment variable
+ * @name: name of the environment variable
+ *
+ * Return: value of the environment variable, or NULL if not found
+ */
+char *_getenv(const char *name)
+{
+	int i;
+	char *value, *env_name, *env_value;
+
+	if (!name)
+		return (NULL);
+
+	for (i = 0; environ[i]; i++)
+	{
+		env_name = strtok(environ[i], "=");
+		env_value = strtok(NULL, "=");
+		if (env_name && env_value && strcmp(env_name, name) == 0)
+		{
+			value = env_value;
+			break;
+		}
+	}
+
+	return (value);
+}
+
+/**
  * interpreter - interpreter
  * @args: arguments
  *
@@ -10,7 +38,7 @@ int interpreter(arguments_t *args)
 {
 	int status;
 	char *_args[3], *tmp, *path_token;
-	char *path = strdup(getenv("PATH"));
+	char *path = strdup(_getenv("PATH"));
 
 	if (!args || !args->command)
 		return (EXIT_SUCCESS);
