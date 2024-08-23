@@ -4,7 +4,6 @@
  * _getenv - get the value of an environment variable
  * @name: name of the environment variable
  * This is the real getenv function source code, FUCK YOU BETTY!!!
- * 
  * Return: value of the environment variable, or NULL if not found
  */
 char *_getenv(const char *name)

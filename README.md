@@ -116,8 +116,8 @@ valgrind --leak-check=full --show-leak-kinds=all ./simple_shell
 ## Flowchart
 The following flowchart illustrates the process of the simple shell:
 ```ascii
-                                        
-         ┌────────────────────┐         
+										
+		 ┌────────────────────┐         
  ┌───────>       Start!       │         
  │       │                    │         
  │       └────────────────────┘         
