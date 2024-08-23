@@ -19,16 +19,19 @@ extern char **environ;
  * @name: name of the programEXIT_SUCCESS
  * @command: command
  * @env: environment
+ * @nb_commands: number of commands
  */
 typedef struct arguments
 {
 	char *name;
 	char *command;
 	char **env;
+	int nb_commands;
 } arguments_t;
 
+void print_error(arguments_t *args, char *msg);
 void cleanup(arguments_t *args);
-int execute(char *name, char **command, char **env);
+int execute(arguments_t *args, char **command, char **env);
 int interpreter(arguments_t *args);
 void prompt(arguments_t *args, size_t *len, int mode);
 

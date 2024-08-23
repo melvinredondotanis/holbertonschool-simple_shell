@@ -6,13 +6,14 @@
  * @argv: argument value
  * @env: environment
  *
- * Return: 0
+ * Return: 0 on success, 1 on failure
  */
 int main(int argc, char **argv, char **env)
 {
 	int status;
 	size_t len;
 	arguments_t *args;
+
 	(void)argc;
 
 	args = malloc(sizeof(arguments_t));
@@ -26,6 +27,7 @@ int main(int argc, char **argv, char **env)
 	args->name = strdup(argv[0]);
 	args->command = NULL;
 	args->env = env;
+	args->nb_commands = 0;
 	if (!args->name)
 	{
 		perror(argv[0]);
