@@ -1,5 +1,5 @@
 # holbertonschool-simple_shell
-![Simple Shell](img/simple_shell.png)
+![Simple Shell](./img/simple_shell.png)
 
 ## Table of Contents
 - [holbertonschool-simple\_shell](#holbertonschool-simple_shell)
@@ -115,11 +115,32 @@ valgrind --leak-check=full --show-leak-kinds=all ./simple_shell
 
 ## Flowchart
 The following flowchart illustrates the process of the simple shell:
-![Flowchart](img/flowchart.png)
+```ascii
+                                        
+         ┌────────────────────┐         
+ ┌───────>       Start!       │         
+ │       │                    │         
+ │       └────────────────────┘         
+ │                 │                    
+ │          ┌──────∨───────┐            
+ │    ┌─────┼    Main      ┼────┐       
+ │    │     └──────────────┘    │       
+ │ ┌──∨───────────┐   ┌─────────∨───┐   
+ │ │              │   │             │   
+ │ │ Non          │   │ Interactive │   
+ │ │ Interactive  │   │             │   
+ │ │              │   │             │   
+ │ └──────────────┘   └─────────────┘   
+ │  │      ┌────────────────┐    │      
+ │  │      │  Interpreter   <────┘      
+ │  │      └───────┼────────┘           
+ │  └──────>───────∨────────┐           
+ └─────────└─── Execute  ───┘           
 
+```
 
 ## Bugs
-- No known bugs at this time
+- No known bugs at this time.
 
 ## Authors
 - [Melvin Redondo--Tanis]("https://melvin.redondotanis.com")

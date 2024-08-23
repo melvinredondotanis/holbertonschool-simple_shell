@@ -4,26 +4,21 @@
 simple_shell \- A simple shell for executing commands
 
 .SH SYNOPSIS
-.B simple_shell
-.RI [ options ]
+simple_shell
+.RB [command]
 
 .SH DESCRIPTION
-.B simple_shell
-Is a minimalist shell designed to run commands from the command line.
+This project is a simple shell implementation for Holberton School. It serves as a UNIX command interpreter, replicating some functionalities of the simple shell `sh`. It allows users to execute commands, navigate directories, and handle input/output redirection. The shell supports both interactive and non-interactive modes, providing a convenient and efficient way to interact with the underlying operating system.
 
-.SH OPTIONS
-.TP
-.B \-h, \-\-help
-Show this help message and exit.
+.SH USAGE
+To use the simple_shell, open a terminal and run the 'simple_shell' command.
 
-.SH EXAMPLES
-.TP
-.B simple_shell
-Launch the interactive shell.
+.SH BUGS
+No known bugs at this time.
 
 .SH SEE ALSO
 .BR sh (1),
-.BR bash (1)
+.BR bash (1).
 
 .SH AUTHOR
 Written by Melvin Redondo--Tanis.
