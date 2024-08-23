@@ -48,7 +48,7 @@ int interpreter(arguments_t *args)
 		return (EXIT_FAILURE);
 	}
 
-	if (_args[0][0] == '/')
+	if (_args[0][0] == '/'|| _args[0][0] == '.')
 	{
 		fd = open(_args[0], O_RDONLY);
 		if (fd == -1)
