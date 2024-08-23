@@ -107,7 +107,7 @@ int interpreter(arguments_t *args)
 		path_token = strtok(NULL, ":");
 	}
 
-	print_error(args, "");
+	print_error(args, "not found");
 	free(path);
 	free(args->command);
 	return (EXIT_FAILURE);
